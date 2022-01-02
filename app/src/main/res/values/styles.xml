@@ -6,5 +6,12 @@
         <item name="colorAccent">@color/color_accent</item>
         <item name="android:windowBackground">@color/color_window_background</item>
         <item name="android:windowActionBar">false</item>
+        <item name="android:textViewStyle">@style/BaseTextViewStyle</item>
+    </style>
+
+    <style name="BaseTextViewStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/product_sans</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
