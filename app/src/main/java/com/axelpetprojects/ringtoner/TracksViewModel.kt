@@ -1,16 +1,19 @@
 package com.axelpetprojects.ringtoner
 
 import android.app.Application
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import java.time.LocalDateTime
 
 class Track(
     val name: String,
     val path: String,
-    val date: String,
+    val date: LocalDateTime,
     val singer: String,
     val album: String,
+    val cover: Bitmap,
     val fileUri: Uri
 )
 
