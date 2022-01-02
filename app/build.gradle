@@ -16,6 +16,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -53,4 +57,7 @@ dependencies {
     // coroutines with lifecycle-aware and architecture components
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
+
+    // working with ViewBinding with help of Kotlin delegates
+    implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
 }
