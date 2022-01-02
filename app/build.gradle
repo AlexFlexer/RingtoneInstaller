@@ -60,4 +60,7 @@ dependencies {
 
     // working with ViewBinding with help of Kotlin delegates
     implementation 'com.github.kirich1409:viewbindingpropertydelegate:1.5.3'
+
+    // extensions for fragments
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
 }
