@@ -43,4 +43,7 @@ dependencies {
 
     // swipe-to-refresh pattern to use in UI
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // ExoPlayer library to play ringtones from the list
+    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
 }
