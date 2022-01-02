@@ -46,4 +46,11 @@ dependencies {
 
     // ExoPlayer library to play ringtones from the list
     implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+
+    // coroutines for better readability of concurrent code, and more
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+    // coroutines with lifecycle-aware and architecture components
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
 }
