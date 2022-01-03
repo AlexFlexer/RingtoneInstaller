@@ -11,6 +11,7 @@ android {
         minSdk 16
         targetSdk 31
         versionCode 1
+        multiDexEnabled = true
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,4 +66,7 @@ dependencies {
 
     // extensions for fragments
     implementation "androidx.fragment:fragment-ktx:1.4.0"
+
+    // this app contains over 64K methods
+    implementation("androidx.multidex:multidex:2.0.1")
 }
