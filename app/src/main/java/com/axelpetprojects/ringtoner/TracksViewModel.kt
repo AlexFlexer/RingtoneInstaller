@@ -1,9 +1,14 @@
 package com.axelpetprojects.ringtoner
 
+import android.Manifest
 import android.app.Application
+import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
+import android.media.RingtoneManager
+import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -19,7 +24,21 @@ class Track(
     val singer: String,
     val album: String,
     val cover: Bitmap?
-)
+) {
+    @Suppress("deprecation")
+    fun toContentValues(): ContentValues {
+        return ContentValues().apply {
+            put(MediaStore.MediaColumns.DATA, path)
+            put(MediaStore.MediaColumns.TITLE, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "audio/mp3")
+            put(MediaStore.Audio.Media.ARTIST, singer)
+            put(MediaStore.Audio.Media.IS_RINGTONE, true)
+            put(MediaStore.Audio.Media.IS_NOTIFICATION, false)
+            put(MediaStore.Audio.Media.IS_ALARM, false)
+            put(MediaStore.Audio.Media.IS_MUSIC, false)
+        }
+    }
+}
 
 class TracksViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -27,6 +46,13 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
     val track = MutableLiveData<Track>()
 
     fun fetchAudios(isRefreshing: Boolean) {
+        val context = getApplication<Application>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                tracksData.value = TrackEvent.NoPermission()
+                return
+            }
+        }
         if (isRefreshing || (tracksData.value is TrackEvent.Result && tracksData.value?.tracks.isNullOrEmpty())) {
             tracksData.value = TrackEvent.Loading()
         }
@@ -47,9 +73,15 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setTrackAsRingtone() {
         val track = this.track.value ?: return
+        val uri = MediaStore.Audio.Media.getContentUriForPath(track.path)
+        RingtoneManager.setActualDefaultRingtoneUri(
+            getApplication(),
+            RingtoneManager.TYPE_RINGTONE,
+            uri
+        )
     }
 
-    @Suppress("deprecation")
+    @Suppress("deprecation", "RedundantSuspendModifier")
     private suspend fun retrieveTracks(): List<Track> {
         val resolver = getApplication<Application>().contentResolver
         val musicUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
@@ -90,4 +122,5 @@ sealed class TrackEvent(val tracks: List<Track> = emptyList()) {
     class Loading : TrackEvent()
     class Result(tracks: List<Track>) : TrackEvent(tracks)
     class Error(val msg: String) : TrackEvent()
+    class NoPermission() : TrackEvent()
 }
