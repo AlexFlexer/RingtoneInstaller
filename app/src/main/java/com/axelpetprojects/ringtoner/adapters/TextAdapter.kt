@@ -15,7 +15,7 @@ class TextAdapter(val text: String?) : RecyclerView.Adapter<TextAdapter.TextHold
     }
 
     override fun onBindViewHolder(holder: TextHolder, position: Int) {
-        holder.binding.root.text = text
+        holder.binding.txtText.text = text
     }
 
     override fun getItemCount(): Int = 1
