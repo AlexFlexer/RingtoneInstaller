@@ -12,6 +12,7 @@
         <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/fragment_tracks.xml" value="0.11767578125" />
         <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/item_error_text.xml" value="0.10740740740740741" />
         <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/item_loading.xml" value="0.10740740740740741" />
+        <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/item_no_permission.xml" value="0.17083333333333334" />
         <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/item_text.xml" value="0.15520833333333334" />
         <entry key="..\:/AndroidProjects/Ringtoner/app/src/main/res/layout/item_track.xml" value="0.25" />
       </map>

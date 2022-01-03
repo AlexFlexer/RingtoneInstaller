@@ -4,4 +4,7 @@
     <string name="track_play">Воспроизвести</string>
     <string name="track_pause">Остановить</string>
     <string name="track_set">Установить на звонок</string>
+
+    <string name="error_no_permission">Чтобы выбрать мелодию для звонка, нужно предоставить доступ к памяти устройства</string>
+    <string name="button_provide">Предоставить</string>
 </resources>
