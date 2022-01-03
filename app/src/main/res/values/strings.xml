@@ -9,4 +9,10 @@
     <string name="button_provide">Предоставить</string>
 
     <string name="toast_ringtone_success">Мелодия успешно установлена на звонок</string>
+
+    <string name="date_yesterday_before">позавчера</string>
+    <string name="date_yesterday">вчера</string>
+    <string name="date_today">сегодня</string>
+    <string name="date_tomorrow">завтра</string>
+    <string name="date_tomorrow_after">послезавтра</string>
 </resources>
