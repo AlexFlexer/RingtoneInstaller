@@ -115,7 +115,7 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
                     )
                 } while (musicCursor.moveToNext())
             }
-            return result
+            return result.also { it.sortByDescending { track -> track.date } }
         }
     }
 }
