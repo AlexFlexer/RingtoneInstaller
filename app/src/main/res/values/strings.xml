@@ -7,4 +7,6 @@
 
     <string name="error_no_permission">Чтобы выбрать мелодию для звонка, нужно предоставить доступ к памяти устройства</string>
     <string name="button_provide">Предоставить</string>
+
+    <string name="toast_ringtone_success">Мелодия успешно установлена на звонок</string>
 </resources>

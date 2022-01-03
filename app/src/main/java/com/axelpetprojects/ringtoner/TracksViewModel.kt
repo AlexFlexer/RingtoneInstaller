@@ -71,6 +71,8 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
         this.track.value = track
     }
 
+    fun getCurrentTrack(): Track? = track.value
+
     fun setTrackAsRingtone() {
         val track = this.track.value ?: return
         val uri = MediaStore.Audio.Media.getContentUriForPath(track.path)
