@@ -32,6 +32,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks), SwipeRefreshLayout.On
             is TrackEvent.Loading -> LoadingAdapter()
             is TrackEvent.NoPermission -> NoPermissionAdapter { mViewModel.fetchAudios(false) }
             is TrackEvent.Result -> TracksAdapter(event.tracks) {
+                mViewModel.selectTrack(it)
                 findNavController().navigate(R.id.tracks_dialog)
             }
         }
