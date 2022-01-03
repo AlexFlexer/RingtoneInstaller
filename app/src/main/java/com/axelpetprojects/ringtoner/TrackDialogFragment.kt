@@ -30,6 +30,14 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mViewModel.track.observe(viewLifecycleOwner) {
+            mBinding.apply {
+                imgTrack.setImageBitmap(it.cover)
+                txtName.text = it.name
+                txtSinger.text = it.singer
+                txtAlbum.text = it.album
+            }
+        }
         mBinding.btnPlay.setOnClickListener {
             if (mPlayer?.isPlaying != true) {
                 // apparently, we are playing track now, it's time to stop playback
