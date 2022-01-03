@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.RingtoneManager
 import android.os.Build
@@ -61,7 +60,7 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
                 try {
                     TrackEvent.Result(retrieveTracks())
                 } catch (e: Exception) {
-                    TrackEvent.Error(e.message.orEmpty())
+                    TrackEvent.Error(e.stackTraceToString())
                 }
             )
         }
@@ -97,7 +96,7 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
                 val dateModified = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED)
                 val path = musicCursor.getColumnIndex(MediaStore.Audio.Media.DATA)
                 do {
-                    val extractedPath = musicCursor.getString(path)
+                    val extractedPath = musicCursor.getString(path).orEmpty()
                     result.add(
                         Track(
                             musicCursor.getString(titleColumn),
@@ -105,12 +104,14 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
                             Date(musicCursor.getLong(dateModified)),
                             musicCursor.getString(artistColumn),
                             musicCursor.getString(albumColumn),
-                            with(metaDataRetriever) {
-                                setDataSource(extractedPath)
-                                val bytes = embeddedPicture
-                                if (bytes == null) null
-                                else BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                            }
+                            // todo decode audio-file cover
+//                            with(metaDataRetriever) {
+//                                setDataSource(extractedPath)
+//                                val bytes = embeddedPicture
+//                                if (bytes == null) null
+//                                else BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+//                            }
+                            null
                         )
                     )
                 } while (musicCursor.moveToNext())
