@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -24,7 +24,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks), SwipeRefreshLayout.On
     }
 
     private val mBinding: FragmentTracksBinding by viewBinding()
-    private val mViewModel: TracksViewModel by viewModels()
+    private val mViewModel: TracksViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mBinding.refresherTracks.setOnRefreshListener(this)

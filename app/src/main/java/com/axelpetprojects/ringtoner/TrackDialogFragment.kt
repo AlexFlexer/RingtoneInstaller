@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import by.kirich1409.viewbindingdelegate.CreateMethod
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.axelpetprojects.ringtoner.databinding.DialogTrackBinding
@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
 
     private val mBinding: DialogTrackBinding by viewBinding(CreateMethod.INFLATE)
-    private val mViewModel: TracksViewModel by viewModels()
+    private val mViewModel: TracksViewModel by activityViewModels()
     private var mPlayer: ExoPlayer? = null
 
     override fun onCreateView(
@@ -39,7 +39,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
             }
         }
         mBinding.btnPlay.setOnClickListener {
-            if (mPlayer?.isPlaying != true) {
+            if (mPlayer?.isPlaying == true) {
                 // apparently, we are playing track now, it's time to stop playback
                 releasePlayer()
                 mBinding.btnPlay.setText(R.string.track_play)
@@ -55,7 +55,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
                     .show()
                 dismissAllowingStateLoss()
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), e.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), e.stackTraceToString(), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -73,6 +73,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
         mPlayer?.clearMediaItems()
         mPlayer?.addMediaItem(MediaItem.fromUri(mViewModel.getCurrentTrack()?.path.orEmpty()))
         mPlayer?.addListener(this)
+        mPlayer?.playWhenReady = true
         mPlayer?.play()
     }
 
@@ -91,7 +92,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
     override fun onPlayerError(error: PlaybackException) {
         val context = context
         if (context != null) {
-            Toast.makeText(context, error.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, error.stackTraceToString(), Toast.LENGTH_LONG).show()
         }
         releasePlayer()
     }
