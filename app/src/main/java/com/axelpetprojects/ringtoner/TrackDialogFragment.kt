@@ -1,5 +1,6 @@
 package com.axelpetprojects.ringtoner
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import java.io.File
 
 class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
 
@@ -72,7 +74,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
                 .build()
         }
         mPlayer?.clearMediaItems()
-        mPlayer?.addMediaItem(MediaItem.fromUri(mViewModel.getCurrentTrack()?.path.orEmpty()))
+        mPlayer?.addMediaItem(MediaItem.fromUri(Uri.fromFile(File(mViewModel.getCurrentTrack()?.path.orEmpty()))))
         mPlayer?.addListener(this)
         mPlayer?.playWhenReady = true
         mPlayer?.prepare()
