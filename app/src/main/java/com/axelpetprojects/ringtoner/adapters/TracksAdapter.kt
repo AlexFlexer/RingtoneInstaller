@@ -21,7 +21,8 @@ class TracksAdapter(private val mTracks: List<Track>, private val trackClicked: 
     override fun onBindViewHolder(holder: TrackHolder, position: Int) {
         val item = mTracks[position]
         holder.binding.apply {
-            imgTrack.setImageBitmap(item.cover)
+            if (item.cover == null) imgTrack.setImageResource(R.drawable.ic_music_placeholder)
+            else imgTrack.setImageBitmap(item.cover)
             txtName.text = item.name
             txtPath.text = item.path
             txtDate.text = formatDate(holder.binding.root.context, item)

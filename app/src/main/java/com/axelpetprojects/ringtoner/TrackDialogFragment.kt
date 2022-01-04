@@ -32,7 +32,8 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mViewModel.track.observe(viewLifecycleOwner) {
             mBinding.apply {
-                imgTrack.setImageBitmap(it.cover)
+                if (it.cover == null) imgTrack.setImageResource(R.drawable.ic_music_placeholder)
+                else imgTrack.setImageBitmap(it.cover)
                 txtName.text = it.name
                 txtSinger.text = it.singer
                 txtAlbum.text = it.album
