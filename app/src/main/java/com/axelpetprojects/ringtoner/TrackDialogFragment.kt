@@ -1,5 +1,6 @@
 package com.axelpetprojects.ringtoner
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -45,7 +46,6 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
             if (mPlayer?.isPlaying == true) {
                 // apparently, we are playing track now, it's time to stop playback
                 releasePlayer()
-                mBinding.btnPlay.setText(R.string.track_play)
             } else {
                 startPlayer()
                 mBinding.btnPlay.setText(R.string.track_pause)
@@ -86,9 +86,13 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
         mPlayer = null
     }
 
+    @SuppressLint("SwitchIntDef")
     override fun onPlaybackStateChanged(playbackState: Int) {
-        if (playbackState == Player.STATE_IDLE) {
-            mBinding.btnPlay.setText(R.string.track_play)
+        when (playbackState) {
+            Player.STATE_IDLE, Player.STATE_ENDED -> {
+                mBinding.btnPlay.setText(R.string.track_play)
+                releasePlayer()
+            }
         }
     }
 
