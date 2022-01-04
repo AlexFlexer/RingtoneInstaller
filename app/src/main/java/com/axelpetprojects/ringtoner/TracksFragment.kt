@@ -29,7 +29,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks), SwipeRefreshLayout.On
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mBinding.refresherTracks.setOnRefreshListener(this)
         mViewModel.tracksData.observe(viewLifecycleOwner) { handleTracks(it) }
-        mViewModel.fetchAudios(false)
+        mViewModel.fetchAudios(true)
     }
 
     override fun onRefresh() = mViewModel.fetchAudios(true)
