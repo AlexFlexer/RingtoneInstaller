@@ -31,11 +31,11 @@ fun Context.startActivityOrFallback(intent: Intent, fallback: () -> Unit = { not
 /**
  * Tries to perform some [actionToTry], and if it throws an exception, returns [defaultVal].
  */
-inline fun <T> tryOrGiveUp(defaultVal: T, actionToTry: () -> T): T =
+inline fun <T> tryOrGiveUp(actionToTry: () -> T, defaultVal: () -> T): T =
     try {
         actionToTry()
     } catch (t: Exception) {
-        defaultVal
+        defaultVal()
     }
 
 private fun prepareIntentForDetailSettings(
