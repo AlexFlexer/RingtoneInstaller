@@ -3,9 +3,11 @@ package com.axelpetprojects.ringtoner
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 
 val ViewGroup.layoutInflater: LayoutInflater
@@ -15,6 +17,13 @@ fun Context.openAppSettings(shouldOpenAsNewTask: Boolean = true) =
     startActivityOrFallback(prepareIntentForDetailSettings(packageName, shouldOpenAsNewTask)) {
         notifyAboutNoSettings()
     }
+
+@RequiresApi(Build.VERSION_CODES.M)
+fun Context.openChangeSettingsActivity() =
+    startActivityOrFallback(Intent().also {
+        it.action = Settings.ACTION_MANAGE_WRITE_SETTINGS
+        it.data = Uri.parse("package:" + packageName.orEmpty())
+    }) { openAppSettings() }
 
 fun Context.startActivityOrFallback(intent: Intent, fallback: () -> Unit = { notifyAboutNoApp() }) =
     tryOrGiveUp({ startActivity(intent) }, { fallback() })

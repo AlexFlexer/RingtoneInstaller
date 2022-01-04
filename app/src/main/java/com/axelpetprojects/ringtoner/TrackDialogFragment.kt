@@ -2,7 +2,9 @@ package com.axelpetprojects.ringtoner
 
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +54,23 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
             }
         }
         mBinding.btnSet.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!Settings.System.canWrite(requireContext())) {
+                    createAlertDialogWithButtonsAndMessage(
+                        requireContext(),
+                        R.string.attention,
+                        R.string.error_cant_write_settings,
+                        R.string.ok,
+                        R.string.cancel,
+                        onPositiveButtonClicked = {
+                            context?.openChangeSettingsActivity()
+                            it.dismiss()
+                        },
+                        onNegativeButtonClicked = { it.dismiss() }
+                    ).show()
+                    return@setOnClickListener
+                }
+            }
             try {
                 mViewModel.setTrackAsRingtone()
                 Toast.makeText(requireContext(), R.string.toast_ringtone_success, Toast.LENGTH_LONG)
