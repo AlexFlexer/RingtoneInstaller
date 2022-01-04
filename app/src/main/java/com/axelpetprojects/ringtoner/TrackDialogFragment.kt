@@ -75,7 +75,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
         mPlayer?.addMediaItem(MediaItem.fromUri(mViewModel.getCurrentTrack()?.path.orEmpty()))
         mPlayer?.addListener(this)
         mPlayer?.playWhenReady = true
-        mPlayer?.play()
+        mPlayer?.prepare()
     }
 
     private fun releasePlayer() {
@@ -95,6 +95,7 @@ class TrackDialogFragment : BottomSheetDialogFragment(), Player.Listener {
         if (context != null) {
             Toast.makeText(context, error.stackTraceToString(), Toast.LENGTH_LONG).show()
         }
+        mBinding.btnPlay.setText(R.string.track_play)
         releasePlayer()
     }
 }
