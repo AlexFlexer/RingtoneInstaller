@@ -41,7 +41,7 @@ class TracksFragment : Fragment(R.layout.fragment_tracks), SwipeRefreshLayout.On
     ) {
         if (requestCode == PERMISSIONS_CODE) {
             if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
-                mViewModel.fetchAudios(false)
+                mViewModel.fetchAudios(true)
             } else {
                 Toast.makeText(requireContext(), R.string.go_to_settings, Toast.LENGTH_LONG).show()
                 requireContext().openAppSettings()
