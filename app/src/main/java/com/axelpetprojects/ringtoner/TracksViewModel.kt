@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.RingtoneManager
 import android.os.Build
@@ -104,14 +105,16 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
                             Date(musicCursor.getLong(dateModified)),
                             musicCursor.getString(artistColumn),
                             musicCursor.getString(albumColumn),
-                            // todo decode audio-file cover
-//                            with(metaDataRetriever) {
-//                                setDataSource(extractedPath)
-//                                val bytes = embeddedPicture
-//                                if (bytes == null) null
-//                                else BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-//                            }
-                            null
+                            with(metaDataRetriever) {
+                                try {
+                                    setDataSource(extractedPath)
+                                    val bytes = embeddedPicture
+                                    if (bytes == null) null
+                                    else BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            }
                         )
                     )
                 } while (musicCursor.moveToNext())
