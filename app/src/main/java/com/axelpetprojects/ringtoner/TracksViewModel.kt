@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadataRetriever
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
@@ -15,6 +16,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.*
 
 class Track(
@@ -75,7 +77,7 @@ class TracksViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setTrackAsRingtone() {
         val track = this.track.value ?: return
-        val uri = MediaStore.Audio.Media.getContentUriForPath(track.path)
+        val uri = Uri.fromFile(File(track.path))
         RingtoneManager.setActualDefaultRingtoneUri(
             getApplication(),
             RingtoneManager.TYPE_RINGTONE,
@@ -128,5 +130,5 @@ sealed class TrackEvent(val tracks: List<Track> = emptyList()) {
     class Loading : TrackEvent()
     class Result(tracks: List<Track>) : TrackEvent(tracks)
     class Error(val msg: String) : TrackEvent()
-    class NoPermission() : TrackEvent()
+    class NoPermission : TrackEvent()
 }
