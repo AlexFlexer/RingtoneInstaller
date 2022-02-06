@@ -6,6 +6,15 @@ plugins {
 android {
     compileSdk 31
 
+    signingConfigs {
+        release_sign {
+            storeFile file('..\\ringtoner_ks.jks')
+            storePassword 'uigbiuvwbifbf9823'
+            keyAlias = 'key_prod'
+            keyPassword 'uigbiuvwbifbf9823'
+        }
+    }
+
     defaultConfig {
         applicationId "com.axelpetprojects.ringtoner"
         minSdk 16
