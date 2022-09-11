@@ -78,4 +78,8 @@ dependencies {
 
     // this app contains over 64K methods
     implementation("androidx.multidex:multidex:2.0.1")
+
+    // paging library
+    def paging_version = "3.1.1"
+    implementation("androidx.paging:paging-runtime:$paging_version")
 }
